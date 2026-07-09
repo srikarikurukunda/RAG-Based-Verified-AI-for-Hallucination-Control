@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RAG Verified AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        RAG Verified AI
+      </div>
+      <div class="topbar-pill">Grounded &middot; Verified &middot; Cached</div>
+    </header>
+
+    <main class="hero">
+      <h1>Ask questions, get <span class="circle-highlight">verified</span> answers.</h1>
+      <p class="subtitle">Every answer is grounded in your own knowledge base &mdash; no hallucinations, no guessing.</p>
+    </main>
+
+    <div class="divider"></div>
+
+    <!-- Scrape Section -->
+    <section class="card">
+      <div class="section-label">Add a web source</div>
+      <div class="input-row">
+        <input type="text" id="urlInput" placeholder="https://example.com/article" />
+        <button id="scrapeBtn" class="btn-outline" onclick="scrapeUrl()">Scrape</button>
+      </div>
+      <div id="scrapeStatus" class="status-msg hidden"></div>
+    </section>
+
+    <!-- Ask Section -->
+    <section class="card">
+      <div class="section-label">Ask a question</div>
+      <div class="input-row">
+        <input type="text" id="questionInput" placeholder="Ask something from your knowledge base..." />
+        <button id="askBtn" class="btn-solid" onclick="askQuestion()">Ask</button>
+      </div>
+
+      <div id="loading" class="hidden">Thinking&hellip;</div>
+
+      <div id="result" class="hidden">
+        <div id="badge" class="badge"></div>
+        <div id="answer"></div>
+        <div id="sources" class="sources hidden"></div>
+      </div>
+
+      <div id="error" class="hidden"></div>
+    </section>
+
+    <footer class="footer">Built with Flask &middot; FAISS &middot; Groq</footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

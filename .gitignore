@@ -1,0 +1,15 @@
+.env
+venv/
+__pycache__/
+*.pyc
+
+faiss_index/
+*.db
+knowledge_base/
+.pytest_cache/
+.DS_Store
+Thumbs.db
+
+# stale leftover copies, not part of the actual project
+rag-ai-system-updated-v2.zip
+rag-ai-system-updated-v2/
