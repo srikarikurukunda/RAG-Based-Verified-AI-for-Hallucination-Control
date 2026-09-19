@@ -169,8 +169,3 @@ pytest tests/ -v
   <li><b>Source management endpoint:</b> List and remove individual sources from the knowledge base without wiping the whole index</li>
 </ul>
 
----
-
-<div align="center">
-<sub>Built as part of a CSE mini-project at Gokaraju Lailavathi Engineering College.</sub>
-</div>
