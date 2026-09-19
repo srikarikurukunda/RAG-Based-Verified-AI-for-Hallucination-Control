@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 MODEL_NAME = "all-MiniLM-L6-v2"
-TOP_K      = 3
+TOP_K      = 5
 
 # This file lives in backend/, so its parent's parent is the project root.
 # Relative paths from .env (FAISS_INDEX_PATH, CHUNKS_PATH) are written

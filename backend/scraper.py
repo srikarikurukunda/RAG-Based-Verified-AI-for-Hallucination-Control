@@ -1,4 +1,5 @@
 import requests
+import urllib3
 from bs4 import BeautifulSoup
 from pathlib import Path
 import re
@@ -31,6 +32,25 @@ def _record_source(filename: str, url: str):
     SOURCES_MAP_PATH.write_text(json.dumps(mapping, indent=2), encoding="utf-8")
 
 
+def _request_with_ssl_fallback(url: str, headers: dict, timeout: int):
+    """Some servers (a number of .ac.in / government sites included) don't
+    send their full certificate chain. Browsers silently patch that gap;
+    Python's requests/certifi doesn't, so a perfectly legitimate site can
+    fail with SSLCertVerificationError. Retry once without verification in
+    that specific case, rather than failing the whole scrape -- but be loud
+    about it, since skipping verification does remove protection against a
+    man-in-the-middle attack on that one request.
+    """
+    try:
+        return requests.get(url, headers=headers, timeout=timeout, allow_redirects=True)
+    except requests.exceptions.SSLError:
+        print(f"WARNING: SSL verification failed for {url} (likely an incomplete "
+              f"certificate chain on the server's end, not a real security issue "
+              f"with the site). Retrying once without certificate verification.")
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        return requests.get(url, headers=headers, timeout=timeout, allow_redirects=True, verify=False)
+
+
 def scrape_url(url: str) -> str:
     # Remove browser fragments like #gsc.tab=0
     url = url.split("#")[0]
@@ -49,12 +69,7 @@ def scrape_url(url: str) -> str:
         "Connection": "keep-alive"
     }
 
-    response = requests.get(
-        url,
-        headers=headers,
-        timeout=20,
-        allow_redirects=True
-    )
+    response = _request_with_ssl_fallback(url, headers, timeout=20)
 
     response.raise_for_status()
 
