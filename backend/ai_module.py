@@ -28,7 +28,7 @@ Do NOT speculate. If you are unsure, say so explicitly.
 def get_ai_response(question: str, context: str) -> dict:
     prompt = SYSTEM_PROMPT + "\n\nCONTEXT:\n" + context + "\n\nQuestion: " + question
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="openai/gpt-oss-120b",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.2
     )
